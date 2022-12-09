@@ -1,0 +1,10 @@
+.editor-styles-wrapper p.step-number {
+    line-height: .9;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.post-grid-featured_img {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+}
