@@ -268,6 +268,24 @@ function mos_theme_options() {
         )),
     ));
 
+    Container::make('theme_options', __('Single Post Page'))
+    ->set_page_parent($basic_options_container) // reference to a top level container
+    ->add_fields(array(
+        Field::make('text', 'mos-single-post-category-widget-title', __('Category widget title'))
+        ->set_default_value( 'Kategorien' )
+        ->set_required( true ),
+        Field::make('text', 'mos-single-post-trending-widget-title', __('Trending post widget title'))
+        ->set_default_value( 'Trending' ),
+        Field::make('text', 'mos-single-post-known-widget-title', __('Known post widget title'))
+        ->set_default_value( 'Bekannter Beitrag' ),
+        Field::make('text', 'mos-single-post-newsletter-widget-title', __('Newsletter widget title'))
+        ->set_default_value( 'Setup Guide: How to create a shared inbox in Gmail' ),
+        Field::make('text', 'mos-single-post-newsletter-shortcode', __('Newsletter shortcode')),
+        Field::make('image', 'mos-single-post-newsletter-image', __('Newsletter Image')),
+        Field::make('text', 'mos-single-post-tag-widget-title', __('Popular tags'))
+        ->set_default_value( 'Beliebte Schlagwörter' ),
+    ));
+
     Container::make('theme_options', __('Sidebar Section'))
     ->set_page_parent($basic_options_container) // reference to a top level container
     ->add_fields(array(
@@ -290,6 +308,22 @@ function mos_theme_options() {
         Field::make('text', 'mos-sidebar-3-title', __('Title')),
         Field::make('text', 'mos-sidebar-3-subtitle', __('Subtitle')),     
         Field::make('text', 'mos-sidebar-3-shortcode', __('Form Shortcode')),     
+    ));
+    Container::make('theme_options', __('Widgets Section'))
+    ->set_page_parent($basic_options_container) // reference to a top level container
+    ->add_fields(array(
+        Field::make('text', 'mos-widgets-newsletter-title', __('Newsletter Title'))
+        ->set_default_value( "Newsletter" ),
+        Field::make('rich_text', 'mos-widgets-newsletter-intro', __('Newsletter Intro'))
+        ->set_default_value( "Abonnieren Sie unseren Newsletter, um die neuesten Nachrichten und Updates zu erhalten." ),
+        Field::make('text', 'mos-widgets-newsletter-shortcode', __('Newsletter Shortcode')),
+        
+        Field::make('text', 'mos-widgets-newsletter-col-2-title', __('Widgets 2 Title'))
+        ->set_default_value( "Unterhalten wir uns" ),
+        Field::make('text', 'mos-widgets-newsletter-col-3-title', __('Widgets 3 Title'))
+        ->set_default_value( "Anschrift" ),
+        Field::make('text', 'mos-widgets-newsletter-col-4-title', __('Widgets 4 Title'))
+        ->set_default_value( "Rechtliches" ),
     ));
     Container::make('theme_options', __('Footer Section'))
     ->set_page_parent($basic_options_container) // reference to a top level container

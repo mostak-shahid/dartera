@@ -1,34 +1,25 @@
     <!-- Footer section -/Start -->
     <footer class="footer <?php echo carbon_get_theme_option( 'mos-footer-class' ) ?>">
-        <div class="container">
+        <div class="container position-relative">
             <!-- Fooetr top -/Start -->
             <div class="footer-top">
                 <div class="row">
                     <div class="newsletter text-center">
-                        <h4 class="fs-30 fw-bold text-white mb-2">
-                            Newsletter
+                        <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-title' )) : ?>
+                        <h4 class="fs-30 fw-bold text-white mb-2 wow fadeInUp delay-0ms">
+                            <?php echo carbon_get_theme_option( 'mos-widgets-newsletter-title' ) ?>
                         </h4>
-                        <p class="mb-0 text-dark_6">
-                            Abonnieren Sie unseren Newsletter, um die neuesten <br class="d-none d-lg-block">
-                            Nachrichten und Updates zu erhalten.
-                        </p>
-
-                        <div class="subscribe-box mt-3 position-relative">
-                            <input class="subscribe-field radius-12 w-100 text-white " type="email" name="subscribe-mail" id="" placeholder="Geben Sie hier Ihre E-Mail ein">
-                            <div class="subscribe-btn">
-                                <a href="#" class="fill-btn fw-semi-bold text-gray_1 lh-20 text-decoration-none bg-flourescent_blue radius-4 d-inline-flex align-items-center gap-2">
-                                    <span>Anmelden</span>
-                                    <span>
-                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M0.842238 3.8902C0.646913 3.94601 0.469545 4.05186 0.327685 4.19726C0.185826 4.34267 0.0843913 4.52259 0.0334185 4.71923C-0.0175542 4.91588 -0.0162984 5.12242 0.0370618 5.31843C0.090422 5.51444 0.194037 5.69311 0.337654 5.83678L2.32799 7.82478V11.6666H6.1739L8.17765 13.6674C8.2852 13.7759 8.41313 13.8621 8.55408 13.9209C8.69504 13.9798 8.84624 14.0102 8.99899 14.0104C9.09938 14.0102 9.19935 13.9973 9.29649 13.9719C9.49305 13.9224 9.6731 13.822 9.81851 13.6808C9.96393 13.5396 10.0696 13.3626 10.1248 13.1675L13.9947 0.012207L0.842238 3.8902ZM1.16657 5.01195L11.0996 2.08362L3.49582 9.67511V7.34178L1.16657 5.01195ZM9.00657 12.8426L6.65749 10.4999H4.32415L11.9267 2.90379L9.00657 12.8426Z"
-                                                fill="#002448" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </div>
+                        <?php endif?>
+                        <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-intro' )) : ?>
+                        <div class="text-dark_6 wow fadeInUp delay-250ms">
+                            <?php echo do_shortcode(carbon_get_theme_option( 'mos-widgets-newsletter-intro' )) ?>
                         </div>
+                        <?php endif?>
+                        <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-shortcode' )) : ?>
+                        <div class="subscribe-box mt-3 position-relative wow fadeInUp delay-500ms">
+                            <?php echo do_shortcode(carbon_get_theme_option( 'mos-widgets-newsletter-shortcode' )) ?>
+                        </div>
+                        <?php endif?>
                     </div>
                 </div>
             </div>
@@ -73,10 +64,10 @@
 
                     <div class="col-sm-6 col-lg-3 mb-lg-0 mb-5 wow fadeInLeft delay-250ms">
                         <div class="footer-widget">
-                            <h6
-                                class="footer-widget-heading fw-semi-bold text-cyan text-uppercase lt-space-05 pb-4 mb-1">
-                                Unterhalten wir uns
-                            </h6>
+                            <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-col-2-title' )) : ?>
+                            <h6 class="footer-widget-heading fw-semi-bold text-cyan text-uppercase lt-space-05 pb-4 mb-1"><?php echo carbon_get_theme_option( 'mos-widgets-newsletter-col-2-title' ) ?></h6>
+                            <?php endif?>
+                            
                             <ul class="widget-list list-unstyled m-0">
                             <?php
                             $phones = carbon_get_theme_option( 'mos-contact-phone' ); 
@@ -128,10 +119,9 @@
 
                     <div class="col-sm-6 col-lg-3 mb-lg-0 mb-5 wow fadeInLeft delay-500ms">
                         <div class="footer-widget">
-                            <h6
-                                class="footer-widget-heading fw-semi-bold text-cyan text-uppercase lt-space-05 pb-4 mb-1">
-                                Anschrift
-                            </h6>
+                            <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-col-3-title' )) : ?>
+                            <h6 class="footer-widget-heading fw-semi-bold text-cyan text-uppercase lt-space-05 pb-4 mb-1"><?php echo carbon_get_theme_option( 'mos-widgets-newsletter-col-3-title' ) ?></h6>
+                            <?php endif?>
                             <ul class="widget-list list-unstyled m-0">
                                <?php $address = carbon_get_theme_option( 'mos-contact-contact-address' );?>
                                 <?php if($address && sizeof($address)) : ?>
@@ -157,10 +147,9 @@
 
                     <div class="col-sm-6 col-lg-3 mb-lg-0 mb-5 wow fadeInLeft delay-750ms">
                         <div class="footer-widget">
-                            <h6
-                                class="footer-widget-heading fw-semi-bold text-cyan text-uppercase lt-space-05 pb-4 mb-1">
-                                Rechtliches
-                            </h6>
+                            <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-col-4-title' )) : ?>
+                            <h6 class="footer-widget-heading fw-semi-bold text-cyan text-uppercase lt-space-05 pb-4 mb-1"><?php echo carbon_get_theme_option( 'mos-widgets-newsletter-col-4-title' ) ?></h6>
+                            <?php endif?>
                             
                             <?php
                             wp_nav_menu(array(
@@ -184,12 +173,12 @@
 
             <div class="footer-bottom">
                 <div class="row align-items-center">
-                    <div class="col-12 col-xl-5 text-xl-start text-center">
+                    <div class="col-12 col-xl-5 text-xl-start text-center wow fadeInLeft delay-250ms">
                         <div class="text-white fw-medium">
                             <?php echo do_shortcode(carbon_get_theme_option( 'mos-footer-content' )); ?>
                         </div>
                     </div>
-                    <div class="col-12 col-xl-7 text-xl-end text-center">
+                    <div class="col-12 col-xl-7 text-xl-end text-center wow fadeInRight delay-250ms">
                         
                         <div class="footer-button-wrapper d-flex flex-wrap align-items-center justify-content-xl-end justify-content-center mt-xl-0 mt-4 gap-4">
                             
