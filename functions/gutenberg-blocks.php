@@ -14,7 +14,36 @@ function mos_gutenberg_blocks() {
             }
         }
     }
-    
+    /*
+    //Base Block start
+    Block::make(__('Base Block'))
+    ->add_tab(__('Content'), array(
+        Field::make('text', 'title', __('Title')),
+    ))
+    ->add_tab(__('Style'), array(
+        Field::make('text', 'mos_faqs_wrapper_class', __('Wrapper Class')),
+        Field::make('text', 'mos_faqs_title_class', __('Title Class')),
+    )) 
+    ->add_tab(__('Advanced'), array(
+        Field::make('textarea', 'mos_faqs_style', __('Style'))
+        ->set_help_text('Please write your custom css without style tag'),
+        Field::make('textarea', 'mos_faqs_script', __('Script'))
+        ->set_help_text('Please write your custom script without script tag'),
+    ))  
+    ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
+    ?>
+<div class="mos-block-wrapper <?php echo @$fields['mos_faqs_wrapper_class']; ?> <?php echo @$attributes['className']; ?>"> 
+</div>
+<?php endif?>
+<?php if(@$fields['mos_faqs_style']) : ?>
+<style><?php echo $fields['mos_faqs_style']; ?></style>
+<?php endif?>
+<?php if(@$fields['mos_faqs_script']) : ?>
+<script><?php echo $fields['mos_faqs_script']; ?></script>
+<?php endif?>
+        <?php
+    }); 
+    */
     //FAQs start
     Block::make(__('FAQs'))
     ->add_tab(__('Content'), array(
