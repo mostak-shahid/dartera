@@ -1,7 +1,7 @@
 <?php 
 get_header();
 $post_id = get_the_ID();
-$post_badge = carbon_get_post_meta( get_the_ID(), 'mos_post_badge' );
+$post_badge = carbon_get_post_meta( $post_id, 'mos_post_badge' );
 $author_id = get_post_field( 'post_author', $post_id );
 $author_name = get_the_author_meta('display_name',$author_id);
 $author_description = get_the_author_meta('description',$author_id);
@@ -40,7 +40,7 @@ $tag_title = carbon_get_theme_option( 'mos-single-post-tag-widget-title' );
                         <div class="author-img">
                             <img src="<?php echo $author_image?aq_resize($author_image, 50,50,true):get_template_directory_uri().'/assets/img/author-img.png' ?>" alt="<?php echo $author_name ?>" class="img-fluid w-auto rounded-circle" width="50" height="50" loading="lazy">
                         </div>
-                        <a href="#" class="author-info d-flex align-items-center gap-3 text-decoration-none">
+                        <a href="<?php echo get_author_posts_url($author_id) ?>" class="author-info d-flex align-items-center gap-3 text-decoration-none">
                             <p class="mb-0 text-gray_1 fs-6">Written By <b><?php echo $author_name ?></b></p>
                             <div class="author-separator rounded-pill"></div>
                             <p class="mb-0 fs-14 fw-normal text-gray_1"><?php echo get_post_time('F j, Y') ?></p>
@@ -88,7 +88,7 @@ $tag_title = carbon_get_theme_option( 'mos-single-post-tag-widget-title' );
                             <img src="<?php echo $author_image?aq_resize($author_image, 90,90,true):get_template_directory_uri().'/assets/img/author-bio-img.png'?>" alt="<?php echo $author_name ?>" class="img-fluid mb-4 mb-md-0 rounded-circle" width="90" height="90">
                             <div class="">
                                 <h6 class="fs-5 fw-bold mb-0 pb-1">
-                                    <a href="#" class=" text-gray_1 text-decoration-none">
+                                    <a href="<?php echo get_author_posts_url($author_id) ?>" class=" text-gray_1 text-decoration-none">
                                         <?php echo $author_name ?>
                                     </a>
                                 </h6>
@@ -142,7 +142,7 @@ $tag_title = carbon_get_theme_option( 'mos-single-post-tag-widget-title' );
                                     <a href="<?php echo get_the_permalink() ?>" class="single-blog radius-12 text-decoration-none d-flex gap-3 align-items-center mb-4">
                                         <span class="blog-img overflow-hidden radius-12 d-block flex-shrink-0">                                  
                                             <?php if (has_post_thumbnail()) : ?>
-                                                <img src="<?php echo aq_resize(get_the_post_thumbnail_url(get_the_ID(),'full'),60,60,true) ?>" alt="<?php echo get_the_title() ?>" class="img-fluid w-100" width="60" height="60" loading="lazy">
+                                                <img src="<?php echo aq_resize(get_the_post_thumbnail_url($post_id,'full'),60,60,true) ?>" alt="<?php echo get_the_title() ?>" class="img-fluid w-100" width="60" height="60" loading="lazy">
                                             <?php else: ?>
                                                 <img src="<?php echo get_template_directory_uri().'/assets/img/blog-small-img1.png'?>" alt="<?php echo get_the_title() ?>" class="img-fluid w-100" width="60" height="60" loading="lazy">
                                             <?php endif?>
@@ -181,7 +181,7 @@ $tag_title = carbon_get_theme_option( 'mos-single-post-tag-widget-title' );
                                     <a href="<?php echo get_the_permalink() ?>" class="single-blog radius-12 text-decoration-none d-flex gap-3 align-items-center mb-4">
                                         <span class="blog-img overflow-hidden radius-12 d-block flex-shrink-0">                                  
                                             <?php if (has_post_thumbnail()) : ?>
-                                                <img src="<?php echo aq_resize(get_the_post_thumbnail_url(get_the_ID(),'full'),60,60,true) ?>" alt="<?php echo get_the_title() ?>" class="img-fluid w-100" width="60" height="60" loading="lazy">
+                                                <img src="<?php echo aq_resize(get_the_post_thumbnail_url($post_id,'full'),60,60,true) ?>" alt="<?php echo get_the_title() ?>" class="img-fluid w-100" width="60" height="60" loading="lazy">
                                             <?php else: ?>
                                                 <img src="<?php echo get_template_directory_uri().'/assets/img/blog-small-img1.png'?>" alt="<?php echo get_the_title() ?>" class="img-fluid w-100" width="60" height="60" loading="lazy">
                                             <?php endif?>

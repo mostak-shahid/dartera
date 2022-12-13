@@ -286,7 +286,7 @@ jQuery(document).ready(function ($) {
 
 
 
-
+/*
     // "blog-carousel
     $(function () {
         if ($(".blog-slide-active").length) {
@@ -305,6 +305,7 @@ jQuery(document).ready(function ($) {
             });
         }
     });
+*/
 
 
 

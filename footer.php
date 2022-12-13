@@ -6,17 +6,17 @@
                 <div class="row">
                     <div class="newsletter text-center">
                         <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-title' )) : ?>
-                        <h4 class="fs-30 fw-bold text-white mb-2 wow fadeInUp delay-0ms">
+                        <h4 class="fs-30 fw-bold text-white mb-2 wow fadeInUp delay-0ms delay-lg-0ms">
                             <?php echo carbon_get_theme_option( 'mos-widgets-newsletter-title' ) ?>
                         </h4>
                         <?php endif?>
                         <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-intro' )) : ?>
-                        <div class="text-dark_6 wow fadeInUp delay-250ms">
+                        <div class="text-dark_6 wow fadeInUp delay-0ms delay-lg-250ms">
                             <?php echo do_shortcode(carbon_get_theme_option( 'mos-widgets-newsletter-intro' )) ?>
                         </div>
                         <?php endif?>
                         <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-shortcode' )) : ?>
-                        <div class="subscribe-box mt-3 position-relative wow fadeInUp delay-500ms">
+                        <div class="subscribe-box mt-3 position-relative wow fadeInUp delay-0ms delay-lg-500ms">
                             <?php echo do_shortcode(carbon_get_theme_option( 'mos-widgets-newsletter-shortcode' )) ?>
                         </div>
                         <?php endif?>
@@ -29,7 +29,7 @@
             <div class="footer-main">
                 <div class="row">
 
-                    <div class="col-sm-6 col-lg-3 mb-lg-0 mb-5 wow fadeInLeft delay-0ms">
+                    <div class="col-sm-6 col-lg-3 mb-lg-0 mb-5 wow fadeInLeft delay-0ms delay-lg-0ms">
                         <div class="footer-widget">                            
                         <?php $logo = carbon_get_theme_option( 'mos-logo' ) ?>
                         <?php if ($logo) : ?> 
@@ -62,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 col-lg-3 mb-lg-0 mb-5 wow fadeInLeft delay-250ms">
+                    <div class="col-sm-6 col-lg-3 mb-lg-0 mb-5 wow fadeInLeft delay-0ms delay-lg-250ms">
                         <div class="footer-widget">
                             <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-col-2-title' )) : ?>
                             <h6 class="footer-widget-heading fw-semi-bold text-cyan text-uppercase lt-space-05 pb-4 mb-1"><?php echo carbon_get_theme_option( 'mos-widgets-newsletter-col-2-title' ) ?></h6>
@@ -117,7 +117,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 col-lg-3 mb-lg-0 mb-5 wow fadeInLeft delay-500ms">
+                    <div class="col-sm-6 col-lg-3 mb-lg-0 mb-5 wow fadeInLeft delay-0ms delay-lg-500ms">
                         <div class="footer-widget">
                             <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-col-3-title' )) : ?>
                             <h6 class="footer-widget-heading fw-semi-bold text-cyan text-uppercase lt-space-05 pb-4 mb-1"><?php echo carbon_get_theme_option( 'mos-widgets-newsletter-col-3-title' ) ?></h6>
@@ -145,7 +145,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 col-lg-3 mb-lg-0 mb-5 wow fadeInLeft delay-750ms">
+                    <div class="col-sm-6 col-lg-3 mb-lg-0 mb-5 wow fadeInLeft delay-0ms delay-lg-750ms">
                         <div class="footer-widget">
                             <?php if (carbon_get_theme_option( 'mos-widgets-newsletter-col-4-title' )) : ?>
                             <h6 class="footer-widget-heading fw-semi-bold text-cyan text-uppercase lt-space-05 pb-4 mb-1"><?php echo carbon_get_theme_option( 'mos-widgets-newsletter-col-4-title' ) ?></h6>
@@ -173,12 +173,12 @@
 
             <div class="footer-bottom">
                 <div class="row align-items-center">
-                    <div class="col-12 col-xl-5 text-xl-start text-center wow fadeInLeft delay-250ms">
+                    <div class="col-12 col-xl-5 text-xl-start text-center wow fadeInLeft delay-0ms delay-lg-250ms">
                         <div class="text-white fw-medium">
                             <?php echo do_shortcode(carbon_get_theme_option( 'mos-footer-content' )); ?>
                         </div>
                     </div>
-                    <div class="col-12 col-xl-7 text-xl-end text-center wow fadeInRight delay-250ms">
+                    <div class="col-12 col-xl-7 text-xl-end text-center wow fadeInRight delay-0ms delay-lg-250ms">
                         
                         <div class="footer-button-wrapper d-flex flex-wrap align-items-center justify-content-xl-end justify-content-center mt-xl-0 mt-4 gap-4">
                             

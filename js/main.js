@@ -58,19 +58,20 @@
 //        },
 //    });
 //});
-
-//    $('.mos-main-menu .dropdown-toggle').click(function (e) {
-//        e.preventDefault();
-//        $(this).toggleClass('show');
-//        $(this).siblings('.dropdown-menu').toggleClass('show');
-//    });
 document.querySelector(".mos-main-menu .dropdown-toggle").addEventListener("click", function(e) {
     e.preventDefault();
-//    console.log(this);
     this.classList.toggle("show");
-//    console.log(this.nextElementSibling);
     this.nextElementSibling.classList.toggle("show");
 });
+var videoBanner = document.querySelector(".video-banner");
+if(typeof(videoBanner) != 'undefined' && videoBanner != null){
+    videoBanner.addEventListener("click", function(e) {
+        //e.preventDefault();
+        //this.nextElementSibling.style.display='block';
+        this.nextElementSibling.classList.toggle("show");
+        //this.style.display='none';
+    });  
+}
 document.addEventListener('scroll', (e) => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 //    if (scrollTop > 100) document.querySelector('#btt-btn').style.display = "block";

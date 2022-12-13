@@ -268,6 +268,17 @@ function mos_theme_options() {
         )),
     ));
 
+    Container::make('theme_options', __('404 Page'))
+    ->set_page_parent($basic_options_container) // reference to a top level container
+    ->add_fields(array(
+        Field::make('text', 'mos-404-title', __('Page title'))
+        ->set_default_value( 'Hoppla! Seite nicht gefunden' )
+        ->set_required( true ),
+        Field::make('rich_text', 'mos-404-intro', __('Page intro'))
+        ->set_default_value( 'Die Seite, nach der Sie suchen, wurde möglicherweise umbenannt, geändert oder ist <br class="d-none d-xl-inline"> vorübergehend nicht verfügbar.' ),
+        Field::make('text', 'mos-404-contact', __('Contact page URL')),
+    ));
+
     Container::make('theme_options', __('Single Post Page'))
     ->set_page_parent($basic_options_container) // reference to a top level container
     ->add_fields(array(

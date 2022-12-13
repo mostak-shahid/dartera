@@ -18,32 +18,143 @@ function mos_gutenberg_blocks() {
     //Base Block start
     Block::make(__('Base Block'))
     ->add_tab(__('Content'), array(
-        Field::make('text', 'title', __('Title')),
+        Field::make('text', 'mos_block_title', __('Title')),
     ))
     ->add_tab(__('Style'), array(
-        Field::make('text', 'mos_faqs_wrapper_class', __('Wrapper Class')),
-        Field::make('text', 'mos_faqs_title_class', __('Title Class')),
+        Field::make('text', 'mos_block_wrapper_class', __('Wrapper Class')),
+        Field::make('text', 'mos_block_title_class', __('Title Class')),
     )) 
     ->add_tab(__('Advanced'), array(
-        Field::make('textarea', 'mos_faqs_style', __('Style'))
+        Field::make('textarea', 'mos_block_style', __('Style'))
         ->set_help_text('Please write your custom css without style tag'),
-        Field::make('textarea', 'mos_faqs_script', __('Script'))
+        Field::make('textarea', 'mos_block_script', __('Script'))
         ->set_help_text('Please write your custom script without script tag'),
     ))  
     ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
     ?>
-<div class="mos-block-wrapper <?php echo @$fields['mos_faqs_wrapper_class']; ?> <?php echo @$attributes['className']; ?>"> 
-</div>
-<?php endif?>
-<?php if(@$fields['mos_faqs_style']) : ?>
-<style><?php echo $fields['mos_faqs_style']; ?></style>
-<?php endif?>
-<?php if(@$fields['mos_faqs_script']) : ?>
-<script><?php echo $fields['mos_faqs_script']; ?></script>
-<?php endif?>
-        <?php
+        <div class="mos-block-wrapper <?php echo @$fields['mos_block_wrapper_class']; ?> <?php echo @$attributes['className']; ?>"> 
+        <div class="title <?php echo @$fields['mos_block_title_class']; ?>"><?php echo $fields['mos_block_title'] ?></div>
+        </div>
+        <?php if(@$fields['mos_block_style']) : ?>
+        <style><?php echo $fields['mos_block_style']; ?></style>
+        <?php endif?>
+        <?php if(@$fields['mos_block_script']) : ?>
+        <script><?php echo $fields['mos_block_script']; ?></script>
+        <?php endif?>
+    <?php
     }); 
+    //Base Block end
     */
+    
+    //Promobox start
+    Block::make(__('Promobox'))
+    ->add_tab(__('Content'), array(
+        Field::make('text', 'mos_promobox_title', __('Title')),
+        Field::make('rich_text', 'mos_promobox_intro', __('Intro')),
+        Field::make('image', 'mos_promobox_image', __('Image')),
+        Field::make('text', 'mos_promobox_url', __('URL')),
+    ))
+    ->add_tab(__('Style'), array(
+        Field::make('text', 'mos_promobox_wrapper_class', __('Wrapper Class')),
+        Field::make('text', 'mos_promobox_title_class', __('Title Class')),
+        Field::make('text', 'mos_promobox_intro_class', __('Intro Class')),
+        Field::make('text', 'mos_promobox_image_class', __('Image Class')),
+    )) 
+    ->add_tab(__('Advanced'), array(
+        Field::make('textarea', 'mos_promobox_style', __('Style'))
+        ->set_help_text('Please write your custom css without style tag'),
+        Field::make('textarea', 'mos_promobox_script', __('Script'))
+        ->set_help_text('Please write your custom script without script tag'),
+    ))  
+    ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
+    ?>
+        <div class="mos-promotion-wrapper <?php echo @$fields['mos_promobox_wrapper_class']; ?> <?php echo @$attributes['className']; ?>">             
+            <div class="promotion-box position-relative">
+                <?php if (@$fields['mos_promobox_title']) : ?>
+                <p class="promobox-title <?php echo @$fields['mos_promobox_intro_class']; ?>">
+                    <?php echo $fields['mos_promobox_title'] ?>
+                </p>
+                <?php endif?>
+                <div class="promotion-img-title d-md-flex align-items-center gap-4 mt-3">
+                    <?php if (@$fields['mos_promobox_image']) : ?>
+                    <div class="promobox-image flex-shrink-0 mb-3 mb-md-0 <?php echo @$fields['mos_promobox_image_class']; ?>">
+                        <?php echo wp_get_attachment_image($fields['mos_promobox_image'], "full", "", array("class" => "img-fluid radius-4"));  ?>
+                    </div>
+                    <?php endif?>
+                    <?php if (@$fields['mos_promobox_intro']) : ?>
+                    <div class="promobox-intro <?php echo @$fields['mos_promobox_intro_class']; ?>"><?php echo do_shortcode($fields['mos_promobox_intro']) ?></div>
+                    <?php endif?>
+                </div>
+                <?php if (@$fields['mos_promobox_url']) : ?>
+                <a href="<?php echo do_shortcode($fields['mos_promobox_url']) ?>" class="hidden-link">Read More</a>
+                <?php endif?>
+            </div>
+        </div>
+        <?php if(@$fields['mos_promobox_style']) : ?>
+        <style><?php echo $fields['mos_promobox_style']; ?></style>
+        <?php endif?>
+        <?php if(@$fields['mos_promobox_script']) : ?>
+        <script><?php echo $fields['mos_promobox_script']; ?></script>
+        <?php endif?>
+    <?php
+    }); 
+    //Promobox end
+    
+    
+    //Video Block start
+    Block::make(__('Video Block'))
+    ->add_tab(__('Content'), array(
+        Field::make('image', 'mos_video_banner_image', __('Video Banner'))
+        ->set_required( true ),
+        Field::make('text', 'mos_video_video_url', __('Video Source'))
+        ->set_required( true ),
+    ))
+    ->add_tab(__('Style'), array(
+        Field::make('text', 'mos_video_wrapper_class', __('Wrapper Class')),
+    )) 
+    ->add_tab(__('Advanced'), array(
+        Field::make('textarea', 'mos_video_style', __('Style'))
+        ->set_help_text('Please write your custom css without style tag'),
+        Field::make('textarea', 'mos_video_script', __('Script'))
+        ->set_help_text('Please write your custom script without script tag'),
+    ))  
+    ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
+    ?>
+        <div class="mos-video-wrapper <?php echo @$fields['mos_video_wrapper_class']; ?> <?php echo @$attributes['className']; ?>"> 
+        
+        <div class="post-inner-video">
+            <!-- for video -->
+            <div class="videoCoverImage position-relative">
+                <div class="video-banner">
+                    <?php echo wp_get_attachment_image($fields['mos_video_banner_image'], "full", "", array("class" => "img-fluid thumb w-100"));  ?>
+                    
+                    <div class="play-btn position-absolute">
+                        <img src="<?php echo get_template_directory_uri() ?>/assets/img/video-play-btn.svg" alt="icon" class="img-fluid">
+                    </div>
+                </div>
+
+                <div class="blog-video video-source position-absolute top-0 start-0 bottom-0 end-0">
+                    <iframe width="100%" height="100%"
+                        src="<?php echo $fields['mos_video_video_url'] ?>"
+                        frameborder="0" allowfullscreen="" include="">
+                    </iframe>
+                </div>
+            </div>
+            <!-- for video -->
+        </div>
+        
+        </div>
+        <?php if(@$fields['mos_video_style']) : ?>
+        <style><?php echo $fields['mos_video_style']; ?></style>
+        <?php endif?>
+        <?php if(@$fields['mos_video_script']) : ?>
+        <script><?php echo $fields['mos_video_script']; ?></script>
+        <?php endif?>
+    <?php
+    }); 
+    //Video Block end
+    
+    
     //FAQs start
     Block::make(__('FAQs'))
     ->add_tab(__('Content'), array(
