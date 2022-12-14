@@ -157,7 +157,9 @@ function mos_gutenberg_blocks() {
     //Projects start
     Block::make(__('Projects'))
     ->add_tab(__('Content'), array(
-        Field::make('text', 'mos_projects_title', __('Title')),
+        Field::make('text', 'mos_projects_count', __('Count'))
+        ->set_default_value( get_option( 'posts_per_page' ) )
+        ->set_required( true ),
         Field::make( 'association', 'mos_projects_categories', __( 'Select Categories' ) )
         ->set_types( array(
             array(
@@ -168,7 +170,8 @@ function mos_gutenberg_blocks() {
     ))
     ->add_tab(__('Style'), array(
         Field::make('text', 'mos_projects_wrapper_class', __('Wrapper Class')),
-        Field::make('text', 'mos_projects_title_class', __('Title Class')),
+        Field::make('text', 'mos_projects_buttons_class', __('Buttons Class')),
+        Field::make('text', 'mos_projects_list_class', __('List Class')),
     )) 
     ->add_tab(__('Advanced'), array(
         Field::make('textarea', 'mos_projects_style', __('Style'))
@@ -178,10 +181,9 @@ function mos_gutenberg_blocks() {
     ))  
     ->set_render_callback(function ($fields, $attributes, $inner_projectss) {
     ?>
-        <div class="mos-projects-wrapper <?php echo @$fields['mos_projects_wrapper_class']; ?> <?php echo @$attributes['className']; ?>">         
-            <div class="title <?php echo @$fields['mos_projects_title_class']; ?>"><?php echo $fields['mos_projects_title'] ?></div>
+        <div class="mos-projects-wrapper <?php echo @$fields['mos_projects_wrapper_class']; ?> <?php echo @$attributes['className']; ?>">    
             <?php if(@$fields['mos_projects_categories'] && sizeof($fields['mos_projects_categories'])) : ?>
-            <ul class="filter-nav list-unstyled d-flex justify-content-center align-items-center flex-wrap mt-5">
+            <ul class="filter-nav list-unstyled d-flex justify-content-center align-items-center flex-wrap mt-5 <?php echo @$fields['mos_projects_buttons_class']; ?>">
                 <li class="filter-nav-item active" data-filter="all">Alle Portfolios</li>
                 <?php 
                     foreach($fields['mos_projects_categories'] as $cat) : 
@@ -192,7 +194,7 @@ function mos_gutenberg_blocks() {
             </ul>
             <?php endif?>
             <?php 
-            $default_posts_per_page = get_option( 'posts_per_page' );
+            $default_posts_per_page = (@$fields['mos_projects_count'])?$fields['mos_projects_count']:get_option( 'posts_per_page' );
             $args = array( 
                 'post_type' => 'project',
                 'posts_per_page' => $default_posts_per_page,
@@ -200,7 +202,7 @@ function mos_gutenberg_blocks() {
             $query = new WP_Query( $args );
             if ( $query->have_posts() ) : 
             ?>
-                <div class="row g-5 projects">
+                <div class="grid row g-5 projects <?php echo @$fields['mos_projects_list_class']; ?>">
                     <?php while ( $query->have_posts() ) : $query->the_post();?>
                     <?php
                         $post_id = get_the_ID();
@@ -210,11 +212,12 @@ function mos_gutenberg_blocks() {
                         
                         $terms_string = join(' ', wp_list_pluck($term_obj_list, 'slug'));
                     ?>
+                    <div class="grid-sizer col-lg-6"></div>
                     <div class="col-lg-6 <?php echo $terms_string ?>">
                         <div class="filterable-portfolio-item webdesign bg-white radius-16">
                             <?php if (has_post_thumbnail()) : ?>
                             <div>
-                                <img class="img-fluid w-100 radius-16" src="<?php echo get_template_directory_uri() ?>/assets/img/portfolio-item-img-1.jpg" alt="<?php echo get_the_title() ?>" width="530" height="400">
+                                <img class="img-fluid w-100 radius-16" src="<?php echo aq_resize(get_the_post_thumbnail_url($post_id, 'full'), 530, 400, true)?>" alt="<?php echo get_the_title() ?>" width="530" height="400">
                             </div>
                             <?php endif?>
                             <div class="card-footer p-30">
