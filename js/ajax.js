@@ -1,6 +1,5 @@
 jQuery(document).ready(function($){	
-    //$('body').on('click', '.projects-wrapper .pagination-wrapper .page-numbers', function (e){
-    
+    //$('body').on('click', '.projects-wrapper .pagination-wrapper .page-numbers', function (e){    
 	/*$('.track-form').submit(function(e){
 		e.preventDefault();
 		var form_data = $(this).serialize();
@@ -22,4 +21,48 @@ jQuery(document).ready(function($){
             }
         });
 	});*/
+    
+
+    $('body').on('click', '.load-more-posts', function (){
+    //$('.load-more-jobs').click(function(){
+        let ths = $(this);
+        let data = JSON.parse(ths.closest('.common-btn').find('.data').val());
+        let loaded = ths.data('loaded');
+        let btnHtml = ths.html();
+//        console.log(data);
+//        console.log(loaded);
+        
+        
+        $.ajax({
+            url: mos_ajax_object.ajaxurl, // or example_ajax_obj.ajaxurl if using on frontend
+            type:"POST",
+            dataType:"json",
+            data: {
+                'action': 'load_more_posts',
+                'data' : data,
+                'loaded' : loaded,
+            },
+            beforeSend: function() {
+                ths.html('Loading...');
+            },
+            success: function(result){
+//                console.log(result);
+                
+//                ths.closest('.more-btn').before(result);
+                ths.closest('.blogs-post').find('.load-more-below').append(result);
+                let resultCount = parseInt(loaded) + parseInt(data.count);
+//                console.log(resultCount);
+                if (resultCount < data.total){
+                    ths.html(btnHtml).data('loaded', resultCount);
+                }
+                else 
+                    ths.closest('.common-btn').remove();
+                
+            },
+            error: function(errorThrown){
+                console.log(errorThrown);
+            }
+        });
+    });    
+    
 });

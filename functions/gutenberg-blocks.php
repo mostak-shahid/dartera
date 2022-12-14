@@ -154,6 +154,109 @@ function mos_gutenberg_blocks() {
     }); 
     //Video Block end
     
+    //Projects start
+    Block::make(__('Projects'))
+    ->add_tab(__('Content'), array(
+        Field::make('text', 'mos_projects_title', __('Title')),
+        Field::make( 'association', 'mos_projects_categories', __( 'Select Categories' ) )
+        ->set_types( array(
+            array(
+                'type'      => 'term',
+                'taxonomy' => 'project_category',
+            )
+        ))
+    ))
+    ->add_tab(__('Style'), array(
+        Field::make('text', 'mos_projects_wrapper_class', __('Wrapper Class')),
+        Field::make('text', 'mos_projects_title_class', __('Title Class')),
+    )) 
+    ->add_tab(__('Advanced'), array(
+        Field::make('textarea', 'mos_projects_style', __('Style'))
+        ->set_help_text('Please write your custom css without style tag'),
+        Field::make('textarea', 'mos_projects_script', __('Script'))
+        ->set_help_text('Please write your custom script without script tag'),
+    ))  
+    ->set_render_callback(function ($fields, $attributes, $inner_projectss) {
+    ?>
+        <div class="mos-projects-wrapper <?php echo @$fields['mos_projects_wrapper_class']; ?> <?php echo @$attributes['className']; ?>">         
+            <div class="title <?php echo @$fields['mos_projects_title_class']; ?>"><?php echo $fields['mos_projects_title'] ?></div>
+            <?php if(@$fields['mos_projects_categories'] && sizeof($fields['mos_projects_categories'])) : ?>
+            <ul class="filter-nav list-unstyled d-flex justify-content-center align-items-center flex-wrap mt-5">
+                <li class="filter-nav-item active" data-filter="all">Alle Portfolios</li>
+                <?php 
+                    foreach($fields['mos_projects_categories'] as $cat) : 
+                    $term = get_term($cat["id"]);
+                ?>            
+                <li class="filter-nav-item" data-filter="<?php echo $term->slug ?>"><?php echo $term->name ?></li>            
+                <?php endforeach?>
+            </ul>
+            <?php endif?>
+            <?php 
+            $default_posts_per_page = get_option( 'posts_per_page' );
+            $args = array( 
+                'post_type' => 'project',
+                'posts_per_page' => $default_posts_per_page,
+            );
+            $query = new WP_Query( $args );
+            if ( $query->have_posts() ) : 
+            ?>
+                <div class="row g-5 projects">
+                    <?php while ( $query->have_posts() ) : $query->the_post();?>
+                    <?php
+                        $post_id = get_the_ID();
+                        $post_badge = carbon_get_post_meta($post_id, 'mos_post_badge');
+                        $project_page = carbon_get_post_meta($post_id, 'mos_project_page');
+                        $term_obj_list = get_the_terms( $post_id, 'project_category' );
+                        
+                        $terms_string = join(' ', wp_list_pluck($term_obj_list, 'slug'));
+                    ?>
+                    <div class="col-lg-6 <?php echo $terms_string ?>">
+                        <div class="filterable-portfolio-item webdesign bg-white radius-16">
+                            <?php if (has_post_thumbnail()) : ?>
+                            <div>
+                                <img class="img-fluid w-100 radius-16" src="<?php echo get_template_directory_uri() ?>/assets/img/portfolio-item-img-1.jpg" alt="<?php echo get_the_title() ?>" width="530" height="400">
+                            </div>
+                            <?php endif?>
+                            <div class="card-footer p-30">
+                                <?php if ($post_badge) :?>
+                                <div class="portfolio-category mb-3">
+                                    <span class="text-uppercase lt-space-05 text-indigo_dye fw-medium bg-gray_6 radius-4 d-inline-block text-decoration-none"><?php echo $post_badge ?></span>
+                                </div>
+                                <?php endif?>
+                                
+                                <h4 class="fs-30 fw-bold text-gray_1 heading-wrapping"><?php echo get_the_title() ?></h4>
+                                <p class="fs-18 text-gray_2 paragraph-wrapping mb-30"><?php echo wp_trim_words(get_the_content(), 30, '...')?></p>
+                                <?php if($project_page && sizeof($project_page)) : ?>
+                                    <?php foreach($project_page as $page) : ?>
+                                        <a class="text-decoration-none text-lapis_lazuli fw-semi-bold d-flex align-items-center gap-2 portfolio-item-btn transition-02" href="<?php echo get_the_permalink($page["id"]) ?>">
+                                            <span><?php echo get_the_title($page["id"]) ?></span>
+                                            <span class="arrow-r-icon transition-02">
+                                                <svg width="11" height="10" viewBox="0 0 11 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M10.512 3.82164L6.93449 0.244141L5.75616 1.42247L8.50033 4.16664H0.166992V5.83331H8.50033L5.75616 8.57747L6.93449 9.75581L10.512 6.17831C10.8244 5.86576 11 5.44191 11 4.99997C11 4.55803 10.8244 4.13419 10.512 3.82164Z" fill="#015EA5"/>
+                                                    </svg>
+                                            </span>
+                                        </a>
+                                    <?php endforeach?>
+                                <?php endif?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endwhile;?>
+                </div>
+                <?php wp_reset_postdata();?>
+            <?php endif;?>
+        </div>
+        <?php if(@$fields['mos_projects_style']) : ?>
+        <style><?php echo $fields['mos_projects_style']; ?></style>
+        <?php endif?>
+        <?php if(@$fields['mos_projects_script']) : ?>
+        <script><?php echo $fields['mos_projects_script']; ?></script>
+        <?php endif?>
+    <?php
+    }); 
+    //Projects end
+    
+    
     
     //FAQs start
     Block::make(__('FAQs'))
