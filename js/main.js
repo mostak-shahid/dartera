@@ -1,4 +1,40 @@
-//jQuery(document).ready(function ($) {
+
+
+jQuery(document).ready(function ($) {
+
+    var $grid = $('.grid').isotope({
+        itemSelector: '.grid-item',
+//        layoutMode: 'fitRows',
+        percentPosition: true,
+        masonry: {
+            columnWidth: '.grid-sizer'
+        }
+    });
+    var filterFns = '';
+    $('.filters-button-group').on('click', 'li', function() {
+        var filterValue = $(this).attr('data-filter');
+        // use filterFn if matches value
+        filterValue = filterFns[filterValue] || filterValue;
+        //console.log(filterValue);
+        $grid.isotope({
+            filter: filterValue
+        });
+    });
+    // change is-checked class on buttons
+    $('.filters-button-group').each(function(i, buttonGroup) {
+        var $buttonGroup = $(buttonGroup);
+        $buttonGroup.on('click', 'li', function() {
+            $buttonGroup.find('.active').removeClass('active');
+            $(this).addClass('active');
+        });
+    });    
+//    $('.load-more-posts').click(function() {
+//        var $newItems = $('<div class="element-item diatomic nonmetal" data-category="diatomic"><h3 class="name">Mostak</h3><p class="symbol">M</p><p class="number">7</p><p class="weight">14.007</p></div><div class="element-item actinoid metal inner-transition" data-category="actinoid"><h3 class="name">Shahid</h3><p class="symbol">S</p><p class="number">92</p><p class="weight">238.029</p></div>');
+//        $('.grid').isotope('insert', $newItems);
+//    });    
+    
+
+    
 //    $('.postFilter').change(function (e) {
 //        console.log($(this).val());
 //        location.href = $(this).val();
@@ -57,7 +93,7 @@
 //            fit: "contain-w",
 //        },
 //    });
-//});
+});
 document.querySelector(".mos-main-menu .dropdown-toggle").addEventListener("click", function(e) {
     e.preventDefault();
     this.classList.toggle("show");

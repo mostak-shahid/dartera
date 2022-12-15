@@ -180,16 +180,17 @@ function mos_gutenberg_blocks() {
         ->set_help_text('Please write your custom script without script tag'),
     ))  
     ->set_render_callback(function ($fields, $attributes, $inner_projectss) {
+        $default_posts_per_page = get_option( 'posts_per_page' );
     ?>
-        <div class="mos-projects-wrapper <?php echo @$fields['mos_projects_wrapper_class']; ?> <?php echo @$attributes['className']; ?>">    
+        <div class="mos-projects-wrapper isotop-wrapper <?php echo @$fields['mos_projects_wrapper_class']; ?> <?php echo @$attributes['className']; ?>">    
             <?php if(@$fields['mos_projects_categories'] && sizeof($fields['mos_projects_categories'])) : ?>
-            <ul class="filter-nav list-unstyled d-flex justify-content-center align-items-center flex-wrap mt-5 <?php echo @$fields['mos_projects_buttons_class']; ?>">
-                <li class="filter-nav-item active" data-filter="all">Alle Portfolios</li>
+            <ul class="filters-button-group filter-nav list-unstyled d-flex justify-content-center align-items-center flex-wrap mt-5 <?php echo @$fields['mos_projects_buttons_class']; ?>">
+                <li class="filter-nav-item active" data-filter="*">Alle Portfolios</li>
                 <?php 
                     foreach($fields['mos_projects_categories'] as $cat) : 
                     $term = get_term($cat["id"]);
                 ?>            
-                <li class="filter-nav-item" data-filter="<?php echo $term->slug ?>"><?php echo $term->name ?></li>            
+                <li class="filter-nav-item" data-filter=".<?php echo $term->slug ?>"><?php echo $term->name ?></li>            
                 <?php endforeach?>
             </ul>
             <?php endif?>
@@ -203,17 +204,16 @@ function mos_gutenberg_blocks() {
             if ( $query->have_posts() ) : 
             ?>
                 <div class="grid row g-5 projects <?php echo @$fields['mos_projects_list_class']; ?>">
+                    <div class="grid-sizer col-lg-6"></div>
                     <?php while ( $query->have_posts() ) : $query->the_post();?>
                     <?php
                         $post_id = get_the_ID();
                         $post_badge = carbon_get_post_meta($post_id, 'mos_post_badge');
                         $project_page = carbon_get_post_meta($post_id, 'mos_project_page');
                         $term_obj_list = get_the_terms( $post_id, 'project_category' );
-                        
                         $terms_string = join(' ', wp_list_pluck($term_obj_list, 'slug'));
                     ?>
-                    <div class="grid-sizer col-lg-6"></div>
-                    <div class="col-lg-6 <?php echo $terms_string ?>">
+                    <div class="grid-item col-lg-6 <?php echo $terms_string ?>">
                         <div class="filterable-portfolio-item webdesign bg-white radius-16">
                             <?php if (has_post_thumbnail()) : ?>
                             <div>
@@ -246,6 +246,17 @@ function mos_gutenberg_blocks() {
                     </div>
                     <?php endwhile;?>
                 </div>
+                
+
+                <!-- Common Buttons -/ Start -->
+                <div class="common-btn text-center mt-5">
+                    <input type="hidden" class="data" value='{"count":"<?php echo $default_posts_per_page ?>", "total":"<?php echo $query->found_posts ?>"}'> 
+                    
+                    <button class="fill-btn fw-semi-bold text-gray_1 lh-20 text-decoration-none bg-flourescent_blue radius-4 d-inline-flex align-items-center load-more-projects" data-loaded="<?php echo $default_posts_per_page ?>">
+                        <span>Entdecke mehr</span>
+                    </button>
+                </div>
+                <!-- Common Buttons -/ End -->
                 <?php wp_reset_postdata();?>
             <?php endif;?>
         </div>
@@ -259,7 +270,61 @@ function mos_gutenberg_blocks() {
     }); 
     //Projects end
     
+
     
+    //Media block start
+    Block::make(__('Media block'))
+    ->add_tab(__('Content'), array(
+        Field::make('text', 'mos_media_block_title', __('Title')),
+        Field::make('text', 'mos_media_block_subtitle', __('Subtitle')),
+        Field::make('textarea', 'mos_media_block_intro', __('Intro')),
+        Field::make('image', 'mos_media_block_image', __('Image')),
+        Field::make('text', 'mos_media_block_url', __('URL')),
+    ))
+    ->add_tab(__('Style'), array(
+        Field::make('text', 'mos_media_block_wrapper_class', __('Wrapper Class')),
+        Field::make('text', 'mos_media_block_title_class', __('Title Class')),
+        Field::make('text', 'mos_media_block_subtitle_class', __('Subtitle Class')),
+        Field::make('text', 'mos_media_block_intro_class', __('Intro Class')),
+        Field::make('text', 'mos_media_block_image_class', __('Image Class')),
+    )) 
+    ->add_tab(__('Advanced'), array(
+        Field::make('textarea', 'mos_media_block_style', __('Style'))
+        ->set_help_text('Please write your custom css without style tag'),
+        Field::make('textarea', 'mos_media_block_script', __('Script'))
+        ->set_help_text('Please write your custom script without script tag'),
+    ))  
+    ->set_render_callback(function ($fields, $attributes, $inner_blocks) {
+    ?>
+        <div class="mos-media-block-wrapper position-relative <?php echo @$fields['mos_media_block_wrapper_class']; ?> <?php echo @$attributes['className']; ?>"> 
+  
+            <div class="media-part">
+                <?php if(@$fields['mos_media_block_image']) : ?>
+                    <div class="img-part <?php echo @$fields['mos_media_block_image_class']; ?>">
+                        <?php echo wp_get_attachment_image($fields['mos_media_block_image'], "full", "", array("class" => "img-fluid"));  ?>
+                    </div>
+                <?php endif?>
+            </div>
+            <div class="text-part">
+                <?php if (@$fields['mos_media_block_subtitle']) : ?><h6 class="subtitle <?php echo @$fields['mos_media_block_subtitle_class']; ?>"><?php echo $fields['mos_media_block_subtitle'] ?></h6><?php endif?>
+                
+                <?php if (@$fields['mos_media_block_title']) : ?><h3 class="title <?php echo @$fields['mos_media_block_title_class']; ?>"><?php echo $fields['mos_media_block_title'] ?></h3><?php endif?>
+
+
+                <?php if (@$fields['mos_media_block_intro']) : ?><div class="intro <?php echo @$fields['mos_media_block_intro_class']; ?>"><?php echo do_shortcode($fields['mos_media_block_intro']) ?></div><?php endif?>               
+            </div>
+            <?php if (@$fields['mos_media_block_url']) : ?><a href="<?php echo $fields['mos_media_block_url'] ?>" class="hidden-link">Read more</a><?php endif?> 
+        </div>
+        <?php if(@$fields['mos_media_block_style']) : ?>
+        <style><?php echo $fields['mos_media_block_style']; ?></style>
+        <?php endif?>
+        <?php if(@$fields['mos_media_block_script']) : ?>
+        <script><?php echo $fields['mos_media_block_script']; ?></script>
+        <?php endif?>
+    <?php
+    }); 
+    //Media block end
+        
     
     //FAQs start
     Block::make(__('FAQs'))

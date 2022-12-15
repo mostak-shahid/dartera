@@ -471,6 +471,27 @@ a:hover {
 .mos-banner-wrapper .common-btn a:nth-child(2n):hover svg path {
     fill: var(--gray_1);
 }
+.banner-media-block {
+    gap: 12px;
+}
+.banner-media-block .media-part {}
+.banner-media-block .media-part .img-part {
+    width: 51px;
+    height: 51px;
+    background: #194e83;
+    border-radius: 16px;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner-media-block .text-part {}
+.banner-media-block .text-part .subtitle{}
+.banner-media-block .text-part .title{}
+.banner-media-block .text-part .intro{}
 .sectionHeading {}
 .sectionHeading p.has-background {
     padding: 5px 12px;
