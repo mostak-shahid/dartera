@@ -247,6 +247,7 @@ a:hover {
 .banner,
 .mos-banner{
     position: relative;
+    overflow: hidden;
 }
 .banner a,
 .mos-banner a{
